@@ -1,5 +1,5 @@
 server:
-    port: 36601
+    port: 30000
     connectionTimeout: 60000
     jetty:
       acceptors: 1
