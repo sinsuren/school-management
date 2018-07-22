@@ -2,15 +2,17 @@ package com.sample.school.management.resource;
 
 import com.codahale.metrics.annotation.Timed;
 import com.sample.school.management.datatypes.StudentRegistrationRequest;
+import com.sample.school.management.repository.Student;
 import com.sample.school.management.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -23,17 +25,18 @@ public class StudentResource {
     @Autowired
     private StudentService studentService;
 
-    @PostMapping
-    //@PostMapping("/create") Extra path can be specified like this
+    @RequestMapping(value = "", method = RequestMethod.POST, produces = {MediaType.APPLICATION_XML_VALUE })
     @Transactional
     @Timed
     public ResponseEntity createStudent(@RequestBody StudentRegistrationRequest studentRegistrationRequest) {
+        Student student = null;
         try {
-            studentService.register(studentRegistrationRequest);
+            student = studentService.register(studentRegistrationRequest);
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok().build();
+        studentRegistrationRequest.setId(student.getId());
+        return ResponseEntity.ok(studentRegistrationRequest);
     }
 
 }

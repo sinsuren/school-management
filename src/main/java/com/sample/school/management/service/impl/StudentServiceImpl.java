@@ -17,8 +17,8 @@ public class StudentServiceImpl implements StudentService{
     private StudentDao studentDao;
 
     @Override
-    public void register(StudentRegistrationRequest request) {
-        studentDao.create(Student.builder()
+    public Student register(StudentRegistrationRequest request) {
+        return studentDao.create(Student.builder()
                 .age(request.getAge())
                 .gender(request.getGender()).name(request.getName())
                 .build());

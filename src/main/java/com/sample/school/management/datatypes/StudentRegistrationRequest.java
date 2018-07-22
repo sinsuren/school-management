@@ -1,12 +1,11 @@
 package com.sample.school.management.datatypes;
 
 import com.sample.school.management.enums.Gender;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Created by surender.s on 16/01/18.
@@ -15,7 +14,13 @@ import javax.validation.constraints.NotNull;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@XmlRootElement(name = "student")
 public class StudentRegistrationRequest {
+
+    @XmlAttribute
+    private Long id;
+
     @NotNull
     private String name;
 
